@@ -36,4 +36,4 @@ User.init(
     tableName: 'users',
     timestamps: true
   }
-)
+);

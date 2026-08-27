@@ -9,7 +9,22 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-    "nome": "Mariana Souza",
-    "email": "mariana.souza@email.com",
+    "nome": "Miguel Santos",
+    "email": "miguel.santos@email.com",
     "senha_hash": "senhaForte123"
 }
+
+### Buscar Usuário por ID
+GET http://localhost:3000/api/users/2
+
+### Atualizar Usuário
+PUT http://localhost:3000/api/users/2
+Content-Type: application/json
+
+{
+    "nome": "Mariana Souza Silva",
+    "email": "mariana.silva@email.com"
+}
+
+### Excluir Usuário
+DELETE http://localhost:3000/api/users/1
