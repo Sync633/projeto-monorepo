@@ -30,3 +30,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
             node-version: 24
+
+      - name: 4. Instalar Dependencias do Backend
+        run:
+          cd backend
+          pnpm install --frozen-lockfile
+
+      - name: 5. Validar Tipos e Compilar o Backend (Express)
+        run:
+          cd backend
+          pnpm run build
