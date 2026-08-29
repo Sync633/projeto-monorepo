@@ -32,11 +32,11 @@ jobs:
             node-version: 24
 
       - name: 4. Instalar Dependencias do Backend
-        run:
+        run: |
           cd backend
           pnpm install --frozen-lockfile
 
       - name: 5. Validar Tipos e Compilar o Backend (Express)
-        run:
+        run: |
           cd backend
           pnpm run build
