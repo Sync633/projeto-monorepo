@@ -9,9 +9,9 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-    "nome": "Miguel Santos",
-    "email": "miguel.santos@email.com",
-    "senha_hash": "senhaForte123"
+    "nome": "Maria",
+    "email": "maria@email.com",
+    "password": "12345678"
 }
 
 ### Buscar Usuário por ID
@@ -27,4 +27,4 @@ Content-Type: application/json
 }
 
 ### Excluir Usuário
-DELETE http://localhost:3000/api/users/1
+DELETE http://localhost:3000/api/users/4
