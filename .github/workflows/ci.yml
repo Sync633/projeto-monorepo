@@ -1,25 +1,27 @@
+# define o nome
 name: Monorepo CI Pipeline
 
+# Precisa do on para rodar
 on:
-  # Dispara automaticamente o enviar novos commits para a branch main
+  # Dispara automaticamente ao enviar novos commits para a branch main
   push:
     branches:
       - main
-  # Dispara na abertura ou atualização de Pull Request direcionados para a branch main
+  # Dispara na abertura ou atualização de pull requests direcionados para a branch main (sequencial)
   pull_request:
     branches:
-      -main
-  # Permite execução manual pelo painel do Github ( aba Actions -> Run Workflow )
+      - main
+  # Permite execução manual pelo painél web do Github (aba Actions -> Run workflow)
   workflow_dispatch:
 
 jobs:
-  validar-monorepo:
-    name: Validar Backend 
-    runs-on: ubuntu-latest
+  validar_monorepo: # nome
+    name: Validar Backend, Frontend e Docker # aparece nos logs
+    runs-on: ubuntu-latest # versão da MV
 
-    steps: 
+    steps: # etapas
       - name: 1. Baixar o codigo fonte
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # repositório com algumas configurações "prontas" (o use actions que já estão prontas)
 
       - name: 2. Habilitar o pnpm
         uses: pnpm/action-setup@v4
@@ -28,9 +30,9 @@ jobs:
 
       - name: 3. Configurar o Node.js 24 com Cache de Dependencias
         uses: actions/setup-node@v4
-        with:
+        with: # passa as propriedades
           node-version: 24
-      
+
       - name: 4. Instalar Dependências do Backend
         run: |
           cd backend
@@ -54,7 +56,7 @@ jobs:
       - name: 8. Validar Construção da Imagem Docker da API
         run: |
           docker build -t api-service:test ./backend
-      
+
       - name: 9.Validar Frontend (quando presente no monorepo)
         run: |
           if [ -d "app"]; then
