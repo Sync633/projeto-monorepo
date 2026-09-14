@@ -52,12 +52,12 @@ export function validateUserInput(input: Partial<UserInput>): ValidationResult {
   }
 
   const validRoles = ['admin', 'aluno', 'professor'];
-    if (input.role && !validRoles.includes(input.role)) {
-        errors.push('O perfil de acesso informado é inválido.');
-    }
+  if (input.role && !validRoles.includes(input.role)) {
+    errors.push('O perfil de acesso informado é inválido.');
+  }
 
-    return {
-        isValid: errors.length === 0,
-        errors,
-    }
+  return {
+    isValid: errors.length === 0,
+    errors,
+  };
 }
