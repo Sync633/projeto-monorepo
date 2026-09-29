@@ -28,11 +28,11 @@ export class AuthController {
         return res.status(401).json({ erro: 'Credenciais invalidas.' });
       }
 
-      // Gera o token JWT com validade de uma hora
+      // Gera o token JWT com validade de 1 hora
       const token = jwt.sign(
         { id: user.id, email: user.email, nome: user.nome },
         JWT_SECRET,
-        { expiresIn: '1hr' },
+        { expiresIn: '1h' },
       );
 
       return res.status(200).json({

@@ -22,7 +22,7 @@ User.init(
       allowNull: false,
     },
     email: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.STRING(150),
       allowNull: false,
       unique: true,
     },

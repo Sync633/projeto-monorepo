@@ -3,7 +3,7 @@ import { AuthController } from '../controllers/AuthController';
 
 const router = Router();
 
-// Rota Pública de Login
+// Rota publica de login
 router.post('/login', AuthController.login);
 
 export { router as authRoutes };

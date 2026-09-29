@@ -1,4 +1,4 @@
-# 1. Define a Imagem de origem base
+# 1. Define a imagem de origem base 
 FROM node:24-alpine
 
 # Configura o diretório global do pnpm
@@ -14,17 +14,18 @@ RUN npm install -g pnpm
 # Desativa a restrição do pnpm 11
 RUN pnpm config set strict-dep-builds false
 
-# 4. Copia apena o manifetes de dependêcias
+# 4. Copia apenas o manifesto de dependências
 COPY package.json ./
 
-# 5.Instalar as dependências do projeto
+# 5. Instalar as dependências do projeto
 RUN pnpm install
 
-# 6. Copia todo o restante do código
+# 6. Copiat todo os restante do código
 COPY . .
 
 # 7. Expoe a porta padrão LDW
 EXPOSE 3000
 
-# 8. Comando para incializar a aplicação
+# 8. Comando para inicializar a aplicação
 CMD ["pnpm", "dev"]
+

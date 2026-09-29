@@ -1,34 +1,10 @@
-import express, { Request, Response } from 'express';
-import cors from 'cors';
 import dotenv from 'dotenv';
-import swaggerUi from 'swagger-ui-express';
-import swaggerDocuments from './docs/swagger.json';
+import { app } from './app';
 import { sequelize } from './config/database';
-import { appRoutes } from './routes';
 
 dotenv.config();
 
-const app = express();
 const PORT = process.env.PORT || 3000;
-
-// Middlewares
-app.use(cors());
-app.use(express.json());
-
-// Rota de Health Check
-app.get('/api/health', (req: Request, res: Response) => {
-  res.status(200).json({
-    status: 'OK',
-    mensagem: 'Servidor Backend rodando com sucesso.',
-    timestamp: new Date().toISOString(),
-  });
-});
-
-// Rota da documentação interativa
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocuments));
-
-// Registra todas as rotas da aplicacao sob o prefixo /api
-app.use('/api', appRoutes);
 
 async function main() {
   try {
@@ -38,7 +14,7 @@ async function main() {
     app.listen(PORT, () => {
       console.log(`Servidor rodando na porta ${PORT}`);
       console.log(
-        `Health Check disponivel em: http://localhost:${PORT}/api/health`,
+        `Heath Check disponivel em: http://localhost:${PORT}/api/health`,
       );
     });
   } catch (error) {

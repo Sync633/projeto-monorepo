@@ -17,18 +17,18 @@ export class UserController {
     }
   }
 
-  // GET /api/users/:id - Busca um usuário por ID
+  // GET /api/users/:id - Busca um usuario por ID
   public static async show(req: Request, res: Response): Promise<Response> {
     try {
       const id = parseInt(req.params.id as string, 10);
       if (isNaN(id) || id <= 0) {
         return res
           .status(400)
-          .json({ erro: 'O ID informado deve ser um número válido.' });
+          .json({ erro: 'O ID informado deve ser um numero valido.' });
       }
 
-      const user = await User.findByPk(Number(id), {
-        attributes: ['id', 'nome', 'email', 'createdAt', 'updatedAt'],
+      const user = await User.findByPk(id, {
+        attributes: ['id', 'nome', 'email', 'createdAt'],
       });
 
       if (!user) {
@@ -43,13 +43,13 @@ export class UserController {
     }
   }
 
-  // POST /api/users/:id - Cadastrar um novo usuário
+  // POST /api/users - Cadastrar um novo usuário
   public static async create(req: Request, res: Response): Promise<Response> {
     try {
       const { nome, email, password } = req.body;
 
       if (!nome || typeof nome !== 'string' || nome.trim() === '') {
-        return res.status(400).json({ erro: 'O campo nome é obrigatório' });
+        return res.status(400).json({ erro: 'O campo nome é obrigatório.' });
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -60,7 +60,7 @@ export class UserController {
       if (!password || typeof password !== 'string' || password.length < 6) {
         return res
           .status(400)
-          .json({ erro: 'A senha deve conter no mínimo 6 caracteres.' });
+          .json({ erro: 'A senha deve conter no minimo 6 caracteres.' });
       }
 
       const userExistente = await User.findOne({
@@ -96,17 +96,45 @@ export class UserController {
   // PUT /api/users/:id - Atualiza um usuário existente
   public static async update(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
+      const id = parseInt(req.params.id as string, 10);
+      if (isNaN(id) || id <= 0) {
+        return res
+          .status(400)
+          .json({ erro: 'O ID informado deve ser um numero valido.' });
+      }
       const { nome, email } = req.body;
 
-      const user = await User.findByPk(Number(id));
+      const user = await User.findByPk(id);
 
       if (!user) {
-        return res.status(404).json({ erro: 'Usuário não encontrado' });
+        return res.status(404).json({ erro: 'Usuário não encontrado.' });
       }
 
-      if (nome) user.nome = nome;
-      if (email) user.email = email;
+      if (nome !== undefined) {
+        if (typeof nome !== 'string' || nome.trim() === '') {
+          return res
+            .status(404)
+            .json({ erro: 'O campo nome deve ser um texto valido.' });
+        }
+
+        user.nome = nome.trim();
+      }
+
+      if (email != undefined) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.trim())) {
+          return res.status(400).json({ erro: 'Informe um e-mail valido.' });
+        }
+
+        const emailEmUso = await User.findOne({
+          where: { email: email.trim().toLowerCase() },
+        });
+        if (emailEmUso && emailEmUso.id !== id) {
+          return res.status(400).json({ erro: 'Este e-mail já está em uso.' });
+        }
+
+        user.email = email.trim().toLowerCase();
+      }
 
       await user.save();
 
@@ -119,29 +147,34 @@ export class UserController {
     } catch (error: any) {
       return res
         .status(500)
-        .json({ erro: 'Erro ao atualizar o usuário', detalhe: error.message });
+        .json({ erro: 'Erro ao atualizar usuário', detalhe: error.message });
     }
   }
 
-  // `PUT /api/users/:id - Deleta um usuário existente
+  // DELETE /api/users/:id - Remove um usuário
   public static async delete(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
+      const id = parseInt(req.params.id as string, 10);
+      if (isNaN(id) || id <= 0) {
+        return res
+          .status(400)
+          .json({ erro: 'O ID informado deve ser um numero valido.' });
+      }
 
-      const user = await User.findByPk(Number(id));
+      const user = await User.findByPk(id);
 
       if (!user) {
-        return res.status(404).json({ erro: 'Usuário não encontrado' });
+        return res.status(404).json({ erro: 'Usuário não encontrado.' });
       }
 
       await user.destroy();
 
-      //204 No Content
+      // 204 No Content
       return res.status(204).send();
     } catch (error: any) {
       return res
         .status(500)
-        .json({ erro: 'Erro ao excluir o usuário', detalhe: error.message });
+        .json({ erro: 'Erro ao excluir usuário', detalhe: error.message });
     }
   }
 }

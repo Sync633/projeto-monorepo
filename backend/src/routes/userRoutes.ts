@@ -3,7 +3,7 @@ import { UserController } from '../controllers/UserController';
 
 const router = Router();
 
-// Mapeamento de verbos HTTP
+// Mapeamento dos verbos HTTP
 router.get('/', UserController.index);
 router.get('/:id', UserController.show);
 router.post('/', UserController.create);
