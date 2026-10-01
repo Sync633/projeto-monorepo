@@ -6,7 +6,7 @@ export interface UserTableProps {
 }
 
 export function UserTable({ usuarios, carregando }: UserTableProps) {
-  // Estado 1: Carregando
+  // Estado 1: Carregamento
   if (carregando) {
     return (
       <div style={{ textAlign: "center", padding: "32px", color: "#6b7280" }}>
@@ -26,13 +26,15 @@ export function UserTable({ usuarios, carregando }: UserTableProps) {
           border: "1px dashed #d1d5db",
           borderRadius: "8px",
         }}
-      ></div>
+      >
+        Nenhum usuário cadastrado até o momento.
+      </div>
     );
   }
 
   // Estado 3: Lista de dados preenchida
   return (
-    <div style={{ overflow: "auto" }}>
+    <div style={{ overflowX: "auto" }}>
       <table
         style={{ width: "100%", borderCollapse: "collapse", marginTop: "8px" }}
       >
@@ -92,7 +94,7 @@ export function UserTable({ usuarios, carregando }: UserTableProps) {
                   fontSize: "0.85rem",
                 }}
               >
-                {usuario.id}
+                #{usuario.id}
               </td>
               <td
                 style={{
@@ -106,8 +108,7 @@ export function UserTable({ usuarios, carregando }: UserTableProps) {
               <td
                 style={{
                   padding: "10px 14px",
-                  color: "#6b7280",
-                  fontSize: "0.85rem",
+                  color: "#4b5563",
                 }}
               >
                 {usuario.email}
