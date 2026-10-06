@@ -36,7 +36,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          
+
       - name: 4. Instalar Dependências do Backend
         run: |
           cd backend
