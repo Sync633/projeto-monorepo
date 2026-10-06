@@ -55,7 +55,7 @@ jobs:
       - name: 7. Checagem de Tipos no Backend (tsc --noEmit)
         run: |
           cd backend
-          pnpm run xtype-check
+          pnpm run type-check
 
       - name: 6. Validar Formatação de Arquivos (Prettier)
         run: |
