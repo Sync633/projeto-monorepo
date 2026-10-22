@@ -1,30 +1,37 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AppLayout } from "./components/AppLayout";
+// src/App.tsx
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthProvider';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { PublicOnlyRoute } from './components/PublicOnlyRoute';
+import { AppLayout } from './components/AppLayout';
 
-function Dashboard() {
-  return <h2 className="text-xl font-bold text-slate-800">Painel Principal</h2>;
-}
-
-function Perfil() {
-  return (
-    <h2 className="text-xl font-bold text-slate-800">Perfil do Usuário</h2>
-  );
-}
+// Telas da aplicacao
+import { Login } from './pages/Login';
+import { Dashboard } from './pages/Dashboard';
+import { Perfil } from './pages/Perfil';
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* O AppLayout envolverá todas as rotas filhas declaradas aqui dentro */}
-        <Route element={<AppLayout />}>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/perfil" element={<Perfil />} />
-        </Route>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Rotas Abertas apenas para usuarios deslogados */}
+          <Route element={<PublicOnlyRoute />}>
+            <Route path="/login" element={<Login />} />
+          </Route>
 
-        {/* Redirecionamento de segurança para qualquer rota desconhecida */}
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
-      </Routes>
-    </BrowserRouter>
+          {/* Rotas Protegidas por Autenticacao */}
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AppLayout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/perfil" element={<Perfil />} />
+            </Route>
+          </Route>
+
+          {/* Rota padrao de fallback */}
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
