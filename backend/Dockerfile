@@ -1,39 +1,50 @@
+# ==============================================================================
 # Estágio 1: Build da Aplicação
-
-# 1. Define a imagem de origem base 
+# ==============================================================================
 FROM node:24-alpine AS builder
 
-# Instalação do pnpm globalmente
-RUN corepack enable && corepack prepara pnpm@latest --activate
-
-# 2. Define diretório de trabalho interno do container
 WORKDIR /app
 
-# Copia dos manifestos de dependências do backend
-COPY package.json pnpm.lock.yaml* ./
+# Instala o pnpm globalmente (evita problemas com corepack e semver)
+RUN npm install -g pnpm@latest
 
-# Instalação de todas as dependências (incluindo devDependencies para o build)
-RUN pnpm install --frozen-lockfile
-
-# Desativa a restrição do pnpm 11
+# Desativa a restrição do pnpm 11 antes da instalação
 RUN pnpm config set strict-dep-builds false
 
-# Copia o código-fonte e da configuração do TypeScript
+# Copia os manifestos de dependências (hífen correto: pnpm-lock.yaml)
+COPY package.json pnpm-lock.yaml* ./
+
+# Instala todas as dependências (com frozen-lockfile correto)
+RUN pnpm install --frozen-lockfile
+
+# Copia código-fonte e configuração do TypeScript
 COPY tsconfig.json ./
 COPY src ./src
 
-# Compilação do TypeScript para JavaScript (gera a pasta dist/)
-RUN pnpm run builds
+# Compila o TypeScript gerando a pasta dist/
+RUN pnpm run build
 
-# Remoção das dependências de desenvolvimento para diminuir o tamanho final
-RUN pnpm prune --prod
+# Comentado para manter o tsx disponível quando rodar via docker-compose (pnpm dev)
+# RUN pnpm prune --prod
 
-# Estágio 2: Imagem Final de Execução (Produção)
+# ==============================================================================
+# Estágio 2: Imagem Final de Execução
+# ==============================================================================
 FROM node:24-alpine AS runner
 
 WORKDIR /app
 
-# Definição do ambiente como produção
+# Instala o pnpm aqui também porque o docker-compose chama "command: pnpm dev"
+RUN npm install -g pnpm@latest
 
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 ENV PORT=3000
+
+# Copia do estágio de build (agora com o tsx incluso em node_modules)
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+
+EXPOSE 3000
+
+CMD ["node", "dist/server.js"]
