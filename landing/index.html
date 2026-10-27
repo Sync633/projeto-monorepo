@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="pt-BR" class="scroll-smooth">
+  <head>
+    <!-- Metadados de Indexacao e SEO Primario -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlatformHub | Gestão Ágil e Automação de Projetos</title>
+    <meta
+      name="description"
+      content="Acelere o ciclo de entrega da sua equipe com o PlatformHub. Orquestração ágil de sprints, autenticação segura e monitoramento em tempo real em um único ambiente."
+    />
+    <meta
+      name="keywords"
+      content="gestão ágil, projetos de software, scrum, kanban, react, typescript, api rest"
+    />
+    <meta name="author" content="Equipe DSM FATEC" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://Sync633.github.io/projeto-monorepo/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://seu-usuario.github.io/projeto-monorepo/" />
+    <meta property="og:title" content="PlatformHub | Gestão Ágil e Automação de Projetos" />
+    <meta property="og:description" content="Acelere o ciclo de entrega da sua equipe com o PlatformHub. Orquestração ágil de sprints, autenticação segura e monitoramento em tempo real." />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&h=630&q=80" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="pt_BR" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://Sync633.github.io/projeto-monorepo/" />
+    <meta name="twitter:title" content="PlatformHub | Gestão Ágil e Automação de Projetos" />
+    <meta name="twitter:description" content="Orquestração ágil de sprints, autenticação segura e monitoramento em tempo real." />
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&h=630&q=80" />
+
+    <!-- Rich Snippets JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PlatformHub",
+        "url": "https://seu-usuario.github.io/projeto-monorepo/",
+        "description": "Plataforma de orquestração ágil de projetos com autenticação JWT e métricas em tempo real.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+        "creator": { "@type": "Organization", "name": "Equipe DSM FATEC" }
+      }
+    </script>
+
+    <!-- Favicon — Primer blue -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232f81f7'><path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/></svg>"
+      type="image/svg+xml"
+    />
+
+    <!-- Tailwind CSS via CDN com GitHub Primer tokens -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              /* GitHub Primer system stack */
+              sans: [
+                "-apple-system",
+                "BlinkMacSystemFont",
+                '"Segoe UI"',
+                "sans-serif",
+              ],
+              mono: [
+                "ui-monospace",
+                "SFMono-Regular",
+                '"SF Mono"',
+                "Menlo",
+                "monospace",
+              ],
+            },
+            colors: {
+              /* GitHub Primer palette */
+              primer: {
+                canvas:   "#0d1117",   /* dark background */
+                surface:  "#161b22",   /* elevated panels  */
+                surface2: "#21262d",   /* secondary surface / btn bg */
+                border:   "#30363d",   /* default border   */
+                blue:     "#2f81f7",   /* primary interactive */
+                green:    "#238636",   /* success / primary CTA */
+                "green-hover": "#2ea043",
+                "blue-hover":  "#388bfd",
+                text:     "#e6edf3",   /* primary text     */
+                muted:    "#8b949e",   /* secondary text   */
+              },
+            },
+            fontSize: {
+              /* Primer type scale */
+              heading: ["32px", { fontWeight: "600", lineHeight: "1.25" }],
+              body:    ["14px", { fontWeight: "400", lineHeight: "1.5"  }],
+            },
+            borderRadius: {
+              /* Primer radius tokens */
+              sm: "3px",
+              md: "6px",
+              lg: "12px",
+            },
+            spacing: {
+              /* Primer 4px base grid */
+              1: "4px",
+              2: "8px",
+              4: "16px",
+              6: "24px",
+              8: "32px",
+              10: "40px",
+              12: "48px",
+              16: "64px",
+              20: "80px",
+              24: "96px",
+            },
+            boxShadow: {
+              /* Primer elevation */
+              overlay: "0 8px 24px rgba(1, 4, 9, 0.6)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      ::selection {
+        background-color: #2f81f7;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+
+  <!-- Dark canvas — GitHub Primer base -->
+  <body class="bg-primer-canvas text-primer-text">
+
+    <!-- ────────────────────────────────────────────
+         HEADER — dark canvas, surface border, Primer nav
+         ──────────────────────────────────────────── -->
+    <header class="sticky top-0 z-50 w-full border-b border-primer-border bg-primer-canvas">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+
+        <!-- Logotipo -->
+        <a
+          href="#"
+          class="group flex items-center gap-2 font-semibold text-primer-text focus:outline-none focus:ring-2 focus:ring-primer-blue rounded-md p-1"
+        >
+          <span
+            class="inline-flex h-8 w-8 items-center justify-center rounded-md bg-primer-surface border border-primer-border text-primer-blue group-hover:border-primer-blue transition-colors"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          </span>
+          <span class="text-sm font-semibold">
+            Platform<span class="text-primer-blue">Hub</span>
+          </span>
+        </a>
+
+        <!-- Navegação Principal -->
+        <nav
+          class="hidden md:flex items-center gap-6 text-sm text-primer-muted"
+          aria-label="Navegação principal"
+        >
+          <a href="#recursos"    class="hover:text-primer-text transition-colors">Recursos</a>
+          <a href="#demonstracao" class="hover:text-primer-text transition-colors">Interface</a>
+          <a href="#depoimentos" class="hover:text-primer-text transition-colors">Depoimentos</a>
+          <a href="#faq"         class="hover:text-primer-text transition-colors">FAQ</a>
+        </nav>
+
+        <!-- Ações -->
+        <div class="flex items-center gap-2">
+          <!-- Secondary button — Primer dark style -->
+          <a
+            href="/app"
+            class="inline-flex items-center justify-center rounded-md border border-primer-border bg-primer-surface2 px-3 py-1.5 text-sm font-medium text-primer-text hover:bg-[#30363d] hover:border-[#8b949e] active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primer-blue focus:ring-offset-2 focus:ring-offset-primer-canvas"
+          >
+            Entrar
+          </a>
+          <!-- Primary button — Primer green -->
+          <a
+            href="/app"
+            class="inline-flex items-center justify-center rounded-md border border-[#2ea043] bg-primer-green px-3 py-1.5 text-sm font-medium text-white hover:bg-primer-green-hover active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primer-green focus:ring-offset-2 focus:ring-offset-primer-canvas"
+          >
+            Acessar Sistema
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="conteudo-principal">
+
+      <!-- ────────────────────────────────────────────
+           HERO — dark canvas, Primer heading scale
+           ──────────────────────────────────────────── -->
+      <section class="relative pt-20 pb-16 lg:pt-28 lg:pb-24 bg-primer-canvas">
+        <div class="mx-auto max-w-7xl px-6 text-center">
+
+          <!-- Pill badge — Primer surface style -->
+          <div
+            class="inline-flex items-center gap-2 rounded-full border border-primer-border bg-primer-surface px-3 py-1 font-mono text-xs text-primer-muted mb-8"
+          >
+            <span class="relative flex h-2 w-2" aria-hidden="true">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primer-green opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primer-green"></span>
+            </span>
+            v2.0 — JWT Auth · Postgres Dual · CI/CD
+          </div>
+
+          <!-- H1 — Primer heading scale -->
+          <h1
+            class="mx-auto max-w-4xl font-semibold tracking-tight text-primer-text"
+            style="font-size: clamp(28px, 5vw, 52px); line-height: 1.15; letter-spacing: -0.01em;"
+          >
+            Acelere suas entregas com
+            <span class="text-primer-blue"> agilidade e excelência técnica</span>
+          </h1>
+
+          <!-- Subtítulo -->
+          <p class="mx-auto mt-6 max-w-2xl text-body text-primer-muted leading-relaxed">
+            Orquestração unificada de squads, visibilidade de sprints ponta a ponta e governança
+            robusta com stack moderna em Node.js, React e TypeScript.
+          </p>
+
+          <!-- CTAs -->
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <!-- Primary — Primer green -->
+            <a
+              href="/app"
+              class="inline-flex items-center gap-2 rounded-md border border-[#2ea043] bg-primer-green px-4 py-2 text-sm font-semibold text-white hover:bg-primer-green-hover active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primer-green focus:ring-offset-2 focus:ring-offset-primer-canvas"
+            >
+              Começar Gratuitamente
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+
+            <!-- Secondary — Primer dark -->
+            <a
+              href="#demonstracao"
+              class="inline-flex items-center gap-2 rounded-md border border-primer-border bg-primer-surface2 px-4 py-2 text-sm font-semibold text-primer-text hover:bg-[#30363d] hover:border-[#8b949e] active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primer-blue focus:ring-offset-2 focus:ring-offset-primer-canvas"
+            >
+              Explorar Painel
+            </a>
+          </div>
+
+          <!-- Métricas -->
+          <div class="mt-16 grid grid-cols-2 gap-6 border-t border-primer-border pt-10 sm:grid-cols-4 max-w-4xl mx-auto">
+            <div class="p-3">
+              <p class="text-2xl font-semibold text-primer-text tracking-tight">+10.000</p>
+              <p class="font-mono text-xs text-primer-muted mt-1 uppercase tracking-wider">Usuários Ativos</p>
+            </div>
+            <div class="p-3">
+              <p class="text-2xl font-semibold text-primer-text tracking-tight">99.9%</p>
+              <p class="font-mono text-xs text-primer-muted mt-1 uppercase tracking-wider">Uptime Garantido</p>
+            </div>
+            <div class="p-3">
+              <p class="text-2xl font-semibold text-primer-text tracking-tight">&lt; 80ms</p>
+              <p class="font-mono text-xs text-primer-muted mt-1 uppercase tracking-wider">Latência de API</p>
+            </div>
+            <div class="p-3">
+              <p class="text-2xl font-semibold text-primer-text tracking-tight">4.9 / 5.0</p>
+              <p class="font-mono text-xs text-primer-muted mt-1 uppercase tracking-wider">Satisfação Técnica</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ────────────────────────────────────────────
+           MOCKUP — Primer surface card, repo card style
+           ──────────────────────────────────────────── -->
+      <section id="demonstracao" class="relative py-12 bg-primer-canvas">
+        <div class="mx-auto max-w-5xl px-6">
+          <!-- Repo-style card -->
+          <div class="rounded-lg border border-primer-border bg-primer-surface shadow-overlay overflow-hidden">
+
+            <!-- Browser chrome bar -->
+            <div class="flex items-center justify-between border-b border-primer-border bg-primer-canvas px-4 py-2.5">
+              <div class="flex items-center gap-1.5" aria-hidden="true">
+                <span class="h-3 w-3 rounded-full bg-[#ff5f57]"></span>
+                <span class="h-3 w-3 rounded-full bg-[#ffbd2e]"></span>
+                <span class="h-3 w-3 rounded-full bg-[#28c840]"></span>
+              </div>
+              <div class="rounded-md border border-primer-border bg-primer-surface2 px-6 py-1 font-mono text-xs text-primer-muted">
+                https://app.platformhub.io/dashboard
+              </div>
+              <div class="h-3 w-3" aria-hidden="true"></div>
+            </div>
+
+            <!-- Dashboard body -->
+            <div class="p-6 md:p-8 space-y-6">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h3 class="text-base font-semibold text-primer-text">
+                    Painel da Squad
+                    <span class="font-mono text-primer-muted">·</span>
+                    Sprint 14
+                  </h3>
+                  <p class="font-mono text-xs text-primer-muted mt-0.5">
+                    Visão consolidada de produtividade, commits e deploys ativos
+                  </p>
+                </div>
+                <span
+                  class="inline-flex items-center gap-1.5 rounded-full border border-[#238636]/50 bg-[#238636]/10 px-3 py-1 font-mono text-xs font-medium text-[#3fb950]"
+                >
+                  <span class="h-1.5 w-1.5 rounded-full bg-[#3fb950]" aria-hidden="true"></span>
+                  Produção Operacional
+                </span>
+              </div>
+
+              <!-- KPI Cards — Primer repo card style -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="rounded-md border border-primer-border bg-primer-canvas p-4 hover:border-[#8b949e] transition-colors">
+                  <p class="font-mono text-xs text-primer-muted">Issues Concluídas</p>
+                  <p class="mt-1 text-xl font-semibold text-primer-text">42 / 48</p>
+                  <div class="mt-3 w-full bg-primer-surface2 h-1.5 rounded-sm overflow-hidden">
+                    <div
+                      class="bg-primer-blue h-1.5 rounded-sm"
+                      style="width: 87%"
+                      role="progressbar"
+                      aria-valuenow="87"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    ></div>
+                  </div>
+                </div>
+
+                <div class="rounded-md border border-primer-border bg-primer-canvas p-4 hover:border-[#8b949e] transition-colors">
+                  <p class="font-mono text-xs text-primer-muted">Tempo Médio de Resolução</p>
+                  <p class="mt-1 text-xl font-semibold text-primer-text">1.8 dias</p>
+                  <p class="font-mono text-xs text-[#3fb950] mt-2">↓ 24% vs sprint anterior</p>
+                </div>
+
+                <div class="rounded-md border border-primer-border bg-primer-canvas p-4 hover:border-[#8b949e] transition-colors">
+                  <p class="font-mono text-xs text-primer-muted">Taxa de Sucesso CI/CD</p>
+                  <p class="mt-1 text-xl font-semibold text-primer-text">99.4%</p>
+                  <p class="font-mono text-xs text-primer-blue mt-2">✓ 138 builds sem falhas</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ────────────────────────────────────────────
+           RECURSOS — Primer repo cards, surface bg
+           ──────────────────────────────────────────── -->
+      <section id="recursos" class="py-20 border-t border-primer-border bg-primer-canvas">
+        <div class="mx-auto max-w-7xl px-6">
+          <div class="text-center max-w-2xl mx-auto">
+            <h2
+              class="font-semibold text-primer-text"
+              style="font-size: 32px; line-height: 1.25;"
+            >
+              Arquitetura sólida para equipes de alta performance
+            </h2>
+            <p class="mt-4 text-body text-primer-muted">
+              Cada componente foi planejado para maximizar a autonomia das squads e a governança de software.
+            </p>
+          </div>
+
+          <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+            <!-- Card 1: Autenticação — Primer repo card -->
+            <article
+              class="rounded-lg border border-primer-border bg-primer-surface p-6 hover:border-[#8b949e] transition-colors group"
+            >
+              <div
+                class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-primer-border bg-primer-canvas text-primer-blue group-hover:border-primer-blue group-hover:bg-primer-blue/10 transition-all"
+                aria-hidden="true"
+              >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+              <h3 class="mt-4 text-base font-semibold text-primer-text">
+                Autenticação JWT Segura
+              </h3>
+              <p class="mt-2 text-body text-primer-muted leading-relaxed">
+                Tokens criptografados com suporte a refresh, controle de papéis por usuário e middleware de proteção no Express.
+              </p>
+              <div class="mt-4 flex items-center gap-1.5 font-mono text-xs text-primer-muted">
+                <span class="h-2.5 w-2.5 rounded-full bg-[#f1e05a]" aria-hidden="true"></span>
+                TypeScript
+              </div>
+            </article>
+
+            <!-- Card 2: Roteamento -->
+            <article
+              class="rounded-lg border border-primer-border bg-primer-surface p-6 hover:border-[#8b949e] transition-colors group"
+            >
+              <div
+                class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-primer-border bg-primer-canvas text-primer-blue group-hover:border-primer-blue group-hover:bg-primer-blue/10 transition-all"
+                aria-hidden="true"
+              >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                  <line x1="4" y1="22" x2="4" y2="15"></line>
+                </svg>
+              </div>
+              <h3 class="mt-4 text-base font-semibold text-primer-text">
+                Roteamento e Guard Routes
+              </h3>
+              <p class="mt-2 text-body text-primer-muted leading-relaxed">
+                Proteção declarativa de telas no cliente utilizando React Router e Context API para gestão global da sessão.
+              </p>
+              <div class="mt-4 flex items-center gap-1.5 font-mono text-xs text-primer-muted">
+                <span class="h-2.5 w-2.5 rounded-full bg-[#61dafb]" aria-hidden="true"></span>
+                React
+              </div>
+            </article>
+
+            <!-- Card 3: PostgreSQL Dual -->
+            <article
+              class="rounded-lg border border-primer-border bg-primer-surface p-6 hover:border-[#8b949e] transition-colors group"
+            >
+              <div
+                class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-primer-border bg-primer-canvas text-primer-blue group-hover:border-primer-blue group-hover:bg-primer-blue/10 transition-all"
+                aria-hidden="true"
+              >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                </svg>
+              </div>
+              <h3 class="mt-4 text-base font-semibold text-primer-text">
+                PostgreSQL Dual
+              </h3>
+              <p class="mt-2 text-body text-primer-muted leading-relaxed">
+                Flexibilidade absoluta com Sequelize ORM: execute testes locais em Docker ou sincronize na nuvem com Supabase.
+              </p>
+              <div class="mt-4 flex items-center gap-1.5 font-mono text-xs text-primer-muted">
+                <span class="h-2.5 w-2.5 rounded-full bg-[#3572A5]" aria-hidden="true"></span>
+                Node.js
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ────────────────────────────────────────────
+           CTA BANNER — surface panel, Primer buttons
+           ──────────────────────────────────────────── -->
+      <section class="relative py-20 border-t border-primer-border bg-primer-surface">
+        <div class="mx-auto max-w-7xl px-6">
+          <div
+            class="relative overflow-hidden rounded-lg border border-primer-border bg-primer-canvas px-8 py-16 text-center shadow-overlay"
+          >
+            <!-- Subtle blue glow behind heading -->
+            <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+              <div class="absolute left-1/2 top-0 -translate-x-1/2 h-px w-3/4 bg-primer-blue/30"></div>
+            </div>
+
+            <div class="relative z-10 mx-auto max-w-3xl">
+              <h2
+                class="font-semibold text-primer-text"
+                style="font-size: 32px; line-height: 1.25;"
+              >
+                Pronto para transformar a gestão dos seus projetos?
+              </h2>
+              <p class="mt-4 text-body text-primer-muted leading-relaxed">
+                Crie sua conta agora mesmo ou acesse o painel desenvolvido ao longo do semestre de
+                Laboratório de Desenvolvimento Web.
+              </p>
+
+              <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <!-- Primary green -->
+                <a
+                  href="/app"
+                  class="inline-flex items-center gap-2 rounded-md border border-[#2ea043] bg-primer-green px-5 py-2.5 text-sm font-semibold text-white hover:bg-primer-green-hover active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primer-green focus:ring-offset-2 focus:ring-offset-primer-canvas"
+                >
+                  Acessar Plataforma Web
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </a>
+                <!-- Secondary dark -->
+                <a
+                  href="#recursos"
+                  class="inline-flex items-center gap-2 rounded-md border border-primer-border bg-primer-surface2 px-5 py-2.5 text-sm font-semibold text-primer-text hover:bg-[#30363d] hover:border-[#8b949e] active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primer-blue focus:ring-offset-2 focus:ring-offset-primer-canvas"
+                >
+                  Ver Recursos
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ────────────────────────────────────────────
+         RODAPÉ — dark canvas, Primer muted text
+         ──────────────────────────────────────────── -->
+    <footer class="border-t border-primer-border bg-primer-surface py-12">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+
+          <!-- Marca -->
+          <div class="col-span-2 md:col-span-1">
+            <a
+              href="#"
+              class="flex items-center gap-2 font-semibold text-primer-text focus:outline-none focus:ring-2 focus:ring-primer-blue rounded-sm"
+            >
+              <span
+                class="inline-flex h-7 w-7 items-center justify-center rounded-md border border-primer-border bg-primer-canvas text-primer-blue text-xs font-bold"
+                aria-hidden="true"
+              >P</span>
+              <span class="text-sm">Platform<span class="text-primer-blue">Hub</span></span>
+            </a>
+            <p class="mt-3 font-mono text-xs text-primer-muted leading-relaxed">
+              Desenvolvido no curso DSM — FATEC.<br />
+              Stack: Node.js · React · TypeScript · PostgreSQL
+            </p>
+          </div>
+
+          <!-- Navegação -->
+          <div>
+            <h3 class="font-mono text-xs font-semibold uppercase tracking-wider text-primer-muted">
+              Navegação
+            </h3>
+            <ul class="mt-4 space-y-2 font-mono text-xs">
+              <li><a href="#recursos"     class="text-primer-muted hover:text-primer-text transition-colors">Recursos</a></li>
+              <li><a href="#demonstracao" class="text-primer-muted hover:text-primer-text transition-colors">Interface</a></li>
+              <li><a href="#depoimentos"  class="text-primer-muted hover:text-primer-text transition-colors">Depoimentos</a></li>
+            </ul>
+          </div>
+
+          <!-- Aplicação -->
+          <div>
+            <h3 class="font-mono text-xs font-semibold uppercase tracking-wider text-primer-muted">
+              Aplicação
+            </h3>
+            <ul class="mt-4 space-y-2 font-mono text-xs">
+              <li><a href="/app" class="text-primer-muted hover:text-primer-text transition-colors">Login no Sistema</a></li>
+              <li><a href="/app" class="text-primer-muted hover:text-primer-text transition-colors">Cadastro de Usuário</a></li>
+              <li><a href="/app" class="text-primer-muted hover:text-primer-text transition-colors">Painel Autenticado</a></li>
+            </ul>
+          </div>
+
+          <!-- Conformidade -->
+          <div>
+            <h3 class="font-mono text-xs font-semibold uppercase tracking-wider text-primer-muted">
+              Conformidade
+            </h3>
+            <ul class="mt-4 space-y-2 font-mono text-xs">
+              <li><span class="text-primer-muted/50">Privacidade (LGPD)</span></li>
+              <li><span class="text-primer-muted/50">Termos de Uso</span></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div
+          class="mt-10 flex flex-col sm:flex-row items-center justify-between border-t border-primer-border pt-8 font-mono text-xs text-primer-muted/60"
+        >
+          <p>© 2026 PlatformHub — FATEC DSM. Todos os direitos reservados.</p>
+          <p class="mt-2 sm:mt-0">Hospedado via GitHub Pages com CI/CD automatizado.</p>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>

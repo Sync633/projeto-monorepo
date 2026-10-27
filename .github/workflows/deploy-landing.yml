@@ -1,0 +1,47 @@
+name: Deploy Landing Page no GitHub Pages
+
+on:
+  # Dispara o workflow em todo push para a branch main que altere arquivos na pasta landing
+  push:
+    branches:
+      - main
+    paths:
+      - 'landing/**'
+      - '.github/workflows/deploy-landing.yml'
+
+  # Permite execucao manual diretamente na aba Actions do GitHub
+  workflow_dispatch:
+
+# Permissoes necessarias para o GitHub Actions interagir e publicar no GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Garante apenas uma execucao de deploy simultanea por vez, cancelando execucoes pendentes
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Ambiente do GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Empacotar e Enviar Artefatos da Landing Page
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Define a pasta raiz contendo o index.html e demais arquivos estaticos
+          path: './landing'
+
+      - name: Executar Deploy no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

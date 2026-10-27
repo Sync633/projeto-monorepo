@@ -5,6 +5,11 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - "landing/**"
+      - ".github/workflows/deploy-landing.yml"
+      - "docs/**"
+      - "README.md"
   # Dispara na abertura ou atualização de Pull Requests direcionados para a branch main
   pull_request:
     branches:
