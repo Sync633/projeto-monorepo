@@ -121,3 +121,10 @@ jobs:
       - name: 2. Testar se o Dockerfile Compila sem Erros
         run: |
           docker build -t api-service:smoke-test ./backend
+
+      - name: 8. Resumo da Execução
+        run: |
+          echo "### Resumo da Execução do Pipeline de CI" >> $GITHUB_STEP_SUMMARY
+          echo "Integração Contínua concluída com sucesso!" >> $GITHUB_STEP_SUMMARY
+          echo "- Autor: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY

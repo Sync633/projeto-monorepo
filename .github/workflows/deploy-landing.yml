@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - 'landing/**'
-      - '.github/workflows/deploy-landing.yml'
+      - "landing/**"
+      - ".github/workflows/deploy-landing.yml"
 
   # Permite execucao manual diretamente na aba Actions do GitHub
   workflow_dispatch:
@@ -20,7 +20,7 @@ permissions:
 
 # Garante apenas uma execucao de deploy simultanea por vez, cancelando execucoes pendentes
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Define a pasta raiz contendo o index.html e demais arquivos estaticos
-          path: './landing'
+          path: "./landing"
 
       - name: Executar Deploy no GitHub Pages
         id: deployment
