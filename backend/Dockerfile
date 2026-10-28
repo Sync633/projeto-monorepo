@@ -1,50 +1,54 @@
 # ==============================================================================
 # Estágio 1: Build da Aplicação
 # ==============================================================================
-FROM node:24-alpine AS builder
+FROM node:20-alpine AS builder
+
+# Instalação do pnpm globalmente
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 
-# Instala o pnpm globalmente (evita problemas com corepack e semver)
-RUN npm install -g pnpm@latest
-
-# Desativa a restrição do pnpm 11 antes da instalação
-RUN pnpm config set strict-dep-builds false
-
-# Copia os manifestos de dependências (hífen correto: pnpm-lock.yaml)
+# Copia dos manifestos de dependências do backend
 COPY package.json pnpm-lock.yaml* ./
 
-# Instala todas as dependências (com frozen-lockfile correto)
+# Instalação de todas as dependências (incluindo devDependencies para o build)
 RUN pnpm install --frozen-lockfile
 
-# Copia código-fonte e configuração do TypeScript
+# Copia do código-fonte e da configuração do TypeScript
 COPY tsconfig.json ./
 COPY src ./src
 
-# Compila o TypeScript gerando a pasta dist/
+# Compilação do TypeScript para JavaScript (gera a pasta dist/)
 RUN pnpm run build
 
-# Comentado para manter o tsx disponível quando rodar via docker-compose (pnpm dev)
-# RUN pnpm prune --prod
+# Remoção das dependências de desenvolvimento para diminuir o tamanho final
+RUN pnpm prune --prod
 
 # ==============================================================================
-# Estágio 2: Imagem Final de Execução
+# Estágio 2: Imagem Final de Execução (Produção)
 # ==============================================================================
-FROM node:24-alpine AS runner
+FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# Instala o pnpm aqui também porque o docker-compose chama "command: pnpm dev"
-RUN npm install -g pnpm@latest
-
-ENV NODE_ENV=development
+# Definição do ambiente como produção
+ENV NODE_ENV=production
 ENV PORT=3000
 
-# Copia do estágio de build (agora com o tsx incluso em node_modules)
+# Criação de um usuário do sistema sem privilégios de root para segurança
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nodejs
+
+# Copia dos manifestos, dependências de produção e artefatos compilados
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
+# Ajuste de permissões para o usuário não-root
+USER nodejs
+
+# Exposição da porta padrão da API
 EXPOSE 3000
 
+# Comando de inicialização do servidor compilado
 CMD ["node", "dist/server.js"]
