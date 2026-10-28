@@ -1,7 +1,7 @@
 # ==============================================================================
 # Estágio 1: Build da Aplicação
 # ==============================================================================
-FROM node:20-alpine AS builder
+FROM node:24-alpine AS builder
 
 # Instalação do pnpm globalmente
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -27,7 +27,7 @@ RUN pnpm prune --prod
 # ==============================================================================
 # Estágio 2: Imagem Final de Execução (Produção)
 # ==============================================================================
-FROM node:20-alpine AS runner
+FROM node:24-alpine AS runner
 
 WORKDIR /app
 
