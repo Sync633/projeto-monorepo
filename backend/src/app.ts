@@ -5,6 +5,7 @@ import cors from 'cors';
 import { appRoutes } from './routes';
 
 const app = express();
+app.disable('x-powered-by');
 
 // Middlewares globais
 app.use(cors());
