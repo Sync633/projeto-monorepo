@@ -60,3 +60,30 @@ jobs:
           echo "- **Registro**: Docker Hub" >> $GITHUB_STEP_SUMMARY
           echo "- **Imagem Publicada**: \`${{ secrets.DOCKERHUB_USERNAME }}/fatec-backend-api:latest\`" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit SHA**: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+  deploy-render:
+    name: 2. Disparar Deploy no Render
+    needs: [publicar-imagem-docker]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Disparar Webhook de Deploy no Render
+        run: |
+          echo "Disparando deploy na nuvem do Render..."
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}")
+          HTTP_BODY=$(echo "$RESPONSE" | sed -e '$d')
+          HTTP_STATUS=$(echo "$RESPONSE" | tr -d '\n' | sed -e 's/.*HTTP_STATUS://')
+
+          echo "Resposta do Render: $HTTP_BODY"
+          echo "Codigo de Status HTTP: $HTTP_STATUS"
+
+          if [ "$HTTP_STATUS" -ne 200 ] && [ "$HTTP_STATUS" -ne 201 ]; then
+            echo "Falha ao acionar o Deploy Hook no Render (Status $HTTP_STATUS)!"
+            exit 1
+          fi
+
+      - name: 2. Publicar Resumo do Deploy no Painel do GitHub
+        run: |
+          echo "### Deploy Acionado com Sucesso no Render" >> $GITHUB_STEP_SUMMARY
+          echo "- **Ambiente**: Produção (Render Web Service)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Gatilho**: Deploy Hook via GitHub Actions" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: Sincronização iniciada com a branch main" >> $GITHUB_STEP_SUMMARY

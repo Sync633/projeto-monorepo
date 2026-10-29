@@ -1,25 +1,17 @@
-import dotenv from 'dotenv';
-import { app } from './app';
-import { sequelize } from './config/database';
+import express from 'express';
+import { healthRoutes } from './routes/healthRoutes';
 
-dotenv.config();
+const app = express();
+const port = process.env.PORT || 3000;
 
-const PORT = process.env.PORT || 3000;
+app.use(express.json());
 
-async function main() {
-  try {
-    await sequelize.authenticate();
-    console.log('Conexão com o PostgreSQL no Supabase realizada com sucesso.');
+// Registro da rota de verificação de integridade
+app.use(healthRoutes);
 
-    app.listen(PORT, () => {
-      console.log(`Servidor rodando na porta ${PORT}`);
-      console.log(
-        `Heath Check disponivel em: http://localhost:${PORT}/api/health`,
-      );
-    });
-  } catch (error) {
-    console.log('Erro ao conectar com o banco de dados: ', error);
-  }
-}
+// Demais rotas da aplicação
+// app.use('/users', userRoutes);
 
-main();
+app.listen(port, () => {
+  console.log(`[API] Servidor ativo e escutando na porta ${port}`);
+});
