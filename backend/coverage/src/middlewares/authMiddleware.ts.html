@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -102,55 +102,55 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config/auth';
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >authMiddleware(</span>
+export function authMiddleware(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const authHeader = <span class="cstat-no" title="statement not covered" >req.headers.authorization;</span>
+  try {
+    const authHeader = req.headers.authorization;
 &nbsp;
     // Verifica se o token foi enviado no formato "Bearer &lt;token&gt;"
-<span class="cstat-no" title="statement not covered" >    if (!authHeader || !authHeader.startsWith('Bearer ')) {</span>
-<span class="cstat-no" title="statement not covered" >      return res.status(401).json({ erro: 'Token não fornecido.' });</span>
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ erro: 'Token não fornecido.' });
     }
 &nbsp;
-    const token = <span class="cstat-no" title="statement not covered" >authHeader.split(' ')[1];</span>
+    const token = authHeader.split(' ')[1];
 &nbsp;
     // Valida a assinatura matematica do token com a chave secreta
-    const usuarioDecodificado = <span class="cstat-no" title="statement not covered" >jwt.verify(token, JWT_SECRET);</span>
+    const usuarioDecodificado = jwt.verify(token, JWT_SECRET);
 &nbsp;
     // Salva os dados do usuario na requisição
-<span class="cstat-no" title="statement not covered" >    (req as any).user = usuarioDecodificado;</span>
+    (req as any).user = usuarioDecodificado;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return next();</span>
+    return next();
   } catch {
-<span class="cstat-no" title="statement not covered" >    return res.status(401).json({ erro: 'Token invalido ou expirado.' });</span>
+    return res.status(401).json({ erro: 'Token invalido ou expirado.' });
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -160,7 +160,7 @@ export function <span class="fstat-no" title="function not covered" >authMiddlew
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-10-08T23:05:31.485Z
+                at 2026-10-29T01:20:28.959Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

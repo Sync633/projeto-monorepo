@@ -10,6 +10,8 @@ export default defineConfig({
       // Define o provedor nativo v8
       provider: 'v8',
 
+      reporter: ['text', 'lcov', 'html'],
+
       // Diretório onde os relatórios HTML e LCOV serão salvos
       reportsDirectory: './coverage',
 

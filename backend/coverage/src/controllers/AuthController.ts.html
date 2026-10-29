@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -118,40 +118,40 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -164,40 +164,40 @@ import { JWT_SECRET } from '../config/auth';
 export class AuthController {
   // POST /api/auth/login
   public static async login(req: Request, res: Response): Promise&lt;Response&gt; {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const { email, password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+    try {
+      const { email, password } = req.body;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      if (!email || !password) {</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(400).json({ erro: 'Email e senha são obrigatórios' });</span>
+      if (!email || !password) {
+        return res.status(400).json({ erro: 'Email e senha são obrigatórios' });
       }
 &nbsp;
       // Busca usuario no banco local
-      const user = <span class="cstat-no" title="statement not covered" >await User.findOne({</span>
+      const user = await User.findOne({
         where: { email: email.trim().toLowerCase() },
       });
-<span class="cstat-no" title="statement not covered" >      if (!user || !user.senha_hash) {</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(401).json({ erro: 'Credenciais invalidas.' });</span>
+      if (!user || !user.senha_hash) {
+        return res.status(401).json({ erro: 'Credenciais invalidas.' });
       }
 &nbsp;
       // Valida a senha comparando o texto puro com o hash
-      const senhaValida = <span class="cstat-no" title="statement not covered" >await bcrypt.compare(password, user.senha_hash);</span>
-<span class="cstat-no" title="statement not covered" >      if (!senhaValida) {</span>
-<span class="cstat-no" title="statement not covered" >        return res.status(401).json({ erro: 'Credenciais invalidas.' });</span>
+      const senhaValida = await bcrypt.compare(password, user.senha_hash);
+      if (!senhaValida) {
+        return res.status(401).json({ erro: 'Credenciais invalidas.' });
       }
 &nbsp;
       // Gera o token JWT com validade de 1 hora
-      const token = <span class="cstat-no" title="statement not covered" >jwt.sign(</span>
+      const token = jwt.sign(
         { id: user.id, email: user.email, nome: user.nome },
         JWT_SECRET,
         { expiresIn: '1h' },
       );
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      return res.status(200).json({</span>
+      return res.status(200).json({
         mensagem: 'Login realizado com sucesso!',
         token,
       });
     } catch (error: any) {
-<span class="cstat-no" title="statement not covered" >      return res.status(500).json({ erro: error.message });</span>
+      return res.status(500).json({ erro: error.message });
     }
   }
 }
@@ -208,7 +208,7 @@ export class AuthController {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-10-08T23:05:31.485Z
+                at 2026-10-29T01:20:28.959Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
